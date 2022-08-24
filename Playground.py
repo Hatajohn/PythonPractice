@@ -1,3 +1,4 @@
+# Library imports
 import pygame
 import time
 import itertools
@@ -5,55 +6,14 @@ import numpy as np
 import random as rand
 import threading as th
 
+# Class imports
+import Ant
+import Colony
+
 # Decided to build an ant simulation from scratch
 ## As it is, I need to figure out how to handle the area the ants will run around in
 ### The current iteration is a cellular automata, so it will be a large 2d array where ants and other objects can
 #### only occupy "cells" on a larger grid, but how to represent everything needs to be fleshed out more.
-
-# Ant class
-class Ant:
-    def __init__(self, name, caste) -> None:
-        self.name = name
-        self.caste = caste
-        self.position_x = 0
-        self.position_y = 0
-        self.speed = rand.randrange(1,5)
-        #self.position_z = 0
-
-    # Ant moves randomly with no directional bias
-    def move_rand(self):
-        old_x = self.position_x
-        old_y = self.position_y
-        self.position_x += rand.randrange(-1 * self.speed, * self.speed, 1)
-        self.position_y += rand.randrange(-1 * self.speed, * self.speed, 1)
-        #self.position_z = rand.randrange(-10,10,1)
-        print("{} has moved from ({}, {}) to ({}, {})".format(self.name, old_x, old_y, self.position_x, self.position_y))
-
-    def move(self, x, y):
-        self.position_x += x
-        self.position_y += y
-        #self.position_z += z
-
-    def position(self):
-        return "{}'s position is: ({}, {})".format(self.name, self.position_x, self.position_y)
-        #return "{}'s position is: ({}, {}, {})".format(self.name, self.position_x, self.position_y, self.position_z)
-
-# Colony for the ants, acts as a structure but also will allow for multiple colonies in a sim
-class Colony:
-    newid = itertools.count().__next__
-    # max number of ants
-    def __init__(self, space) -> None:
-        self.id = Colony.newid()
-        self.ants = []
-        self.space = space
-        print("Colony {} established!".format(self.id))
-    
-    def ant_add(self, ant):
-        self.ants.append(ant)
-        print("{} was added to Colony {}".format(ant.name, self.id))
-    
-    def size(self):
-        print("Colony {} has {} ants".format(self.id, len(self.ants)))
 
 class Cell:
     def __init__(self) -> None:
